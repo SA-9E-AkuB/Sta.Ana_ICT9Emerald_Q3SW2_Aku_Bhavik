@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Q3 Seatwork 2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body{
+        margin: 0;
+        font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+        background-color: #000;
+        background-image: url('https://c.tenor.com/IwftzSV9RvEAAAAC/adidas-logo.gif');
+        background-size: cover;
+        background-attachment: fixed;
+        color: white;
+      }
+
+      .navbar{
+        background-color: #000;
+        border-bottom: 1px solid #333;
+        padding: 15px;
+      }
+
+      .navbar-brand{
+        font-weight: bold;
+        letter-spacing: 2px;
+        font-size: 22px;
+      }
+
+      .hero{
+        padding: 60px 20px 30px 20px;
+        text-align: center;
+      }
+
+      .hero h1{
+        font-size: 48px;
+        font-weight: 800;
+        letter-spacing: 4px;
+      }
+
+      .hero p{
+        color: #ccc;
+      }
+
+      #mainBox{
+        background-color: rgba(0,0,0,0.85);
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 700px;
+        margin: auto;
+        border: 1px solid #222;
+      }
+
+      .main_btn{
+        background-color: white;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      .main_btn:hover{
+        background-color: #111;
+        color: white;
+        border: 1px solid white;
+      }
+
+      #outputSection{
+        margin-top: 40px;
+        padding: 40px;
+        background-color: rgba(255,255,255,0.95);
+        color: black;
+        display: none;
+      }
+
+      .shoe-card{
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: 0.3s;
+        margin-bottom: 30px;
+      }
+
+      .shoe-card:hover{
+        transform: scale(1.03);
+      }
+
+      .shoe-card img{
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+      }
+
+      .shoe-card-body{
+        padding: 15px;
+      }
+
+      .shoe-card-body h5{
+        font-weight: bold;
+      }
+
+      .price{
+        font-weight: bold;
+      }
+
+      footer{
+        text-align: center;
+        padding: 20px;
+        background-color: black;
+        color: white;
+        margin-top: 60px;
+      }
+
+    </style>
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="https://www.adidas.com" target="_blank">ADIDAS</a>
+    <span class="text-white">Impossible is Nothing</span>
+  </div>
+</nav>
+<div class="hero">
+  <h1>SHOE FINDER</h1>
+  <p>Enter your budget and discover your perfect pair</p>
+</div>
+<div id="mainBox">
+  <input type="text" id="budget" class="form-control mb-3" placeholder="Enter budget (example: 5,000)">
+  <div class="text-center">
+    <button class="main_btn" onclick="showShoes()">Show Shoes</button>
+    <button class="main_btn" onclick="showDiscount()">Calculate Discount</button>
+    <button class="main_btn" onclick="showStores()">Show Locations</button>
+  </div>
+
+</div>
+
+<div id="outputSection" class="container">
+</div>
+
+<script>
+  function getBudget(){
+    let raw = document.getElementById("budget").value;
+    let cleaned = raw.replace(/,/g,"");
+    return Number(cleaned);
+  }
+
+  function resetSection(){
+    let section = document.getElementById("outputSection");
+    section.style.display = "block";
+    section.innerHTML = "";
+  }
+
+  function showShoes(){
+
+    resetSection();
+
+    let budget = getBudget();
+
+    if(isNaN(budget) || budget <= 0){
+      document.getElementById("outputSection").innerHTML = "Please enter valid budget.";
+      return;
+    }
+
+    let shoes = [
+
+  {
+    name:"Adidas Superstar",
+    price:4500,
+    desc:"Iconic shell-toe design with heritage street appeal",
+    img:"https://assets.adidas.com/images/w_600,f_auto,q_auto/222aa62581964e9c8c9b6030d110feeb_9366/Superstar_II_Shoes_Kids_Black_JH9981.jpg"
+  },
+
+  {
+    name:"Adidas Stan Smith",
+    price:7500,
+    desc:"Minimalist tennis silhouette built for everyday style",
+    img:"https://images.unsplash.com/photo-1544441892-794166f1e3be?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+
+  {
+    name:"Adidas NMD_R1",
+    price:8500,
+    desc:"Responsive Boost cushioning made for urban life",
+    img:"https://image-cdn.hypb.st/https://hypebeast.com/image/2022/11/neighborhood-adidas-nmd-r1-paisley-gy4157-release-date-0.jpg?fit=max&cbr=1&q=90&w=750&h=500"
+  },
+
+  {
+    name:"Adidas Ultraboost",
+    price:10000,
+    desc:"High-performance running shoe with energy return",
+    img:"https://th.bing.com/th/id/OIP.FPmhXX1ad3W5TSEIDgc3ewHaFL?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+  }
+
+];
+
+    let output = "<div class='row'>";
+
+    for(let i=0;i<shoes.length;i++){
+
+      if(budget >= shoes[i].price){
+
+        output +=
+        "<div class='col-md-4'>" +
+        "<div class='shoe-card'>" +
+        "<img src='" + shoes[i].img + "'>" +
+        "<div class='shoe-card-body'>" +
+        "<h5>" + shoes[i].name + "</h5>" +
+        "<p>" + shoes[i].desc + "</p>" +
+        "<p class='price'>₱" + shoes[i].price.toLocaleString() + "</p>" +
+        "</div></div></div>";
+      }
+    }
+
+    output += "</div>";
+
+    document.getElementById("outputSection").innerHTML = output;
+  }
+
+  function showDiscount(){
+
+    resetSection();
+
+    let budget = getBudget();
+
+    if(isNaN(budget) || budget <= 0){
+      document.getElementById("outputSection").innerHTML = "Enter valid budget.";
+      return;
+    }
+
+    let discount = budget * 0.10;
+
+    document.getElementById("outputSection").innerHTML =
+    "<h2>Member Discount</h2><p>You can save approximately ₱" +
+    discount.toLocaleString() + "</p>";
+  }
+
+  function showStores(){
+
+    resetSection();
+
+    document.getElementById("outputSection").innerHTML =
+    "<h2>Store Locations</h2>" +
+    "<p>SM Mall of Asia - Pasay City</p>" +
+    "<p>SM North EDSA - Quezon City</p>" +
+    "<p><a href='https://www.adidas.com' target='_blank'>Visit Official Website</a></p>";
+  }
+
+</script>
+
+<footer>
+  © Bhavik Aku
+</footer>
+
+</body>
+</html>
